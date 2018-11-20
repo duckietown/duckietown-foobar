@@ -20,7 +20,7 @@ def get_version(filename):
 version = get_version(filename='src/duckietown_foobar/__init__.py')
 
 setup(name='duckietown_foobar',
-
+      description='A short description of the foobar library',
       version=version,
       download_url='http://github.com/duckietown/duckietown-foobar/tarball/%s' % version,
       package_dir={'': 'src'},
@@ -46,5 +46,17 @@ setup(name='duckietown_foobar',
           'console_scripts': [
               'dt-foobar-cli = duckietown_foobar.cli:cli_main',
           ]
-      }
+      },
+      classifiers=[
+          # How mature is this project? Common values are
+          #   3 - Alpha
+          #   4 - Beta
+          #   5 - Production/Stable
+          'Development Status :: 3 - Alpha',
+
+          # Specify the Python versions you support here. In particular, ensure
+          # that you indicate whether you support Python 2, Python 3 or both.
+          'Programming Language :: Python :: 2',
+          'Programming Language :: Python :: 3',
+      ],
       )
