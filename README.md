@@ -2,6 +2,9 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/duckietown/duckietown-foobar/badge.svg?branch=master18)](https://coveralls.io/github/duckietown/duckietown-foobar?branch=master18)
 
+[![PyPI status](https://img.shields.io/pypi/status/duckietown_foobar.svg)](https://pypi.python.org/pypi/duckietown_foobar/)
+
+
 # Foobar library
 
 A short description of the foobar library
