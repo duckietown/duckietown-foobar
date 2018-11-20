@@ -3,8 +3,8 @@ workflows:
   version: 2
   test:
     jobs:
-      - test-3.7
-      - test-2.7
+    - test-3.7
+    - test-2.7
 jobs:
   test-3.7: &test-template
     environment:
@@ -12,93 +12,93 @@ jobs:
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     docker:
-      - image: python:3.7
+    - image: python:3.7
     steps:
-      - checkout
-      - run:
-          name: Install Git LFS
-          command: |
-            curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
-            apt-get update
-            apt-get install -y git-lfs openssh-client
-            git lfs install
-            mkdir -p ~/.ssh
-            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-            ssh git@github.com git-lfs-authenticate "${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}" download
-            git lfs pull
-      - run:
-          name: Install deps
-          command: |
-            echo PATH=$PATH
-            echo $PWD
-            ls -a
-            cd lib-foobar
-            pip install -q --user --upgrade -r requirements.txt
+    - checkout
+    - run:
+        name: Install Git LFS
+        command: |
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+          apt-get update
+          apt-get install -y git-lfs openssh-client
+          git lfs install
+          mkdir -p ~/.ssh
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+          ssh git@github.com git-lfs-authenticate "${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}" download
+          git lfs pull
+    - run:
+        name: Install deps
+        command: |
+          echo PATH=$PATH
+          echo $PWD
+          ls -a
+          cd lib-foobar
+          pip install -q --user --upgrade -r requirements.txt
 
-      - run:
-          name: List deps
-          command: |
-            mkdir -p artifacts
-            cd lib-foobar
-            pip freeze | tee artifacts/pip-freeze.txt
+    - run:
+        name: List deps
+        command: |
+          cd lib-foobar
+          mkdir -p artifacts
+          pip freeze | tee artifacts/pip-freeze.txt
 
-      - run:
-          name: setup.py develop
-          command: |
-            cd lib-foobar
-            python setup.py develop --prefix ~/.local --no-deps
+    - run:
+        name: setup.py develop
+        command: |
+          cd lib-foobar
+          python setup.py develop --prefix ~/.local --no-deps
 
-      - run:
-          name: Run tests
-          command: |
-            cd lib-foobar
-            make tests-coverage-single-nocontracts
+    - run:
+        name: Run tests
+        command: |
+          cd lib-foobar
+          make tests-coverage-single-nocontracts
 
-      - run:
-          name: Notebooks
-          command: |
-            cd lib-foobar
-            make -C notebooks || true
+    - run:
+        name: Notebooks
+        command: |
+          cd lib-foobar
+          make -C notebooks || true
 
-      - run:
-          name: Coverage analysis
-          when: always
-          command: |
-            cd lib-foobar
-            make coverage-report
+    - run:
+        name: Coverage analysis
+        when: always
+        command: |
+          cd lib-foobar
+          make coverage-report
 
-      - run:
-          name: Coveralls submission
-          when: always
-          command: |
-            cd lib-foobar
-            make coverage-coveralls
+    - run:
+        name: Coveralls submission
+        when: always
+        command: |
+          cd lib-foobar
+          make coverage-coveralls
 
-      - run:
-          name: Create JUnit output
-          when: always
-          command: |
-            cd lib-foobar
-            make junit
+    - run:
+        name: Create JUnit output
+        when: always
+        command: |
+          cd lib-foobar
+          make junit
 
-      - test-results-store:
-          path: lib-foobar/out-comptests/junit
+    - test-results-store:
+        path: lib-foobar/out-comptests/junit
 
-      - store_artifacts:
-          path: lib-foobar/out-comptests/duckietown_foobar_tests
-          destination: duckietown_foobar_tests
-          
-      - store_artifacts:
-          path: lib-foobar/artifacts
-          destination: artifacts
+    - store_artifacts:
+        path: lib-foobar/out-comptests/duckietown_foobar_tests
+        destination: duckietown_foobar_tests
 
-      - store_artifacts:
-          path: lib-foobar/out_coverage
-          destination: coverage
+    - store_artifacts:
+        path: lib-foobar/artifacts
+        destination: artifacts
 
-      - store_artifacts:
-          path: lib-foobar/notebooks
-          destination: notebooks
+    - store_artifacts:
+        path: lib-foobar/out_coverage
+        destination: coverage
+
+    - store_artifacts:
+        path: lib-foobar/notebooks
+        destination: notebooks
 
   test-2.7:
     <<: *test-template
