@@ -30,8 +30,6 @@ jobs:
         name: Install deps
         command: |
           echo PATH=$PATH
-          echo $PWD
-          ls -a
           cd lib-foobar
           pip install -q --user --upgrade -r requirements.txt
 
