@@ -1,3 +1,6 @@
+[![CircleCI](https://circleci.com/gh/duckietown/duckietown-foobar.svg?style=shield)](https://circleci.com/gh/duckietown/duckietown-foobar)
+
+[![Coverage Status](https://coveralls.io/repos/github/duckietown/duckietown-foobar/badge.svg?branch=master18)](https://coveralls.io/github/duckietown/duckietown-foobar?branch=master18)
 
 # Foobar library
 
