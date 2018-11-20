@@ -31,6 +31,8 @@ jobs:
           name: Install deps
           command: |
             echo PATH=$PATH
+            echo $PWD
+            ls -a
             pip install -q --user --upgrade -r requirements.txt
 
       - run:
