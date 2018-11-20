@@ -13,7 +13,6 @@ jobs:
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     docker:
       - image: python:3.7
-    working_directory: ~/repo/lib-foobar
     steps:
       - checkout
       - run:
@@ -33,81 +32,72 @@ jobs:
             echo PATH=$PATH
             echo $PWD
             ls -a
+            cd lib-foobar
             pip install -q --user --upgrade -r requirements.txt
 
       - run:
           name: List deps
           command: |
             mkdir -p artifacts
+            cd lib-foobar
             pip freeze | tee artifacts/pip-freeze.txt
 
       - run:
           name: setup.py develop
           command: |
+            cd lib-foobar
             python setup.py develop --prefix ~/.local --no-deps
 
       - run:
           name: Run tests
           command: |
+            cd lib-foobar
             make tests-coverage-single-nocontracts
 
       - run:
           name: Notebooks
           command: |
+            cd lib-foobar
             make -C notebooks || true
-
-      - run:
-          name: Example draw maps
-          command: |
-            make tests-maps-coverage
-
-#      - run:
-#          name: Example LFV download
-#          command: |
-#            rm test-data/LFV.json
-#            wget https://github.com/duckietown/duckietown-world/raw/master18/test-data/LFV.json -O test-data/LFV.json
-
-      - run:
-          name: Example LFV
-          command: |
-            make tests-LFV-coverage
-
 
       - run:
           name: Coverage analysis
           when: always
           command: |
+            cd lib-foobar
             make coverage-report
 
       - run:
           name: Coveralls submission
           when: always
           command: |
+            cd lib-foobar
             make coverage-coveralls
 
       - run:
           name: Create JUnit output
           when: always
           command: |
+            cd lib-foobar
             make junit
 
       - test-results-store:
-          path: out-comptests/junit
+          path: lib-foobar/out-comptests/junit
 
       - store_artifacts:
-          path: out-comptests/duckietown_world_tests
-          destination: duckietown_world_tests
+          path: lib-foobar/out-comptests/duckietown_foobar_tests
+          destination: duckietown_foobar_tests
           
       - store_artifacts:
-          path: artifacts
+          path: lib-foobar/artifacts
           destination: artifacts
 
       - store_artifacts:
-          path: out_coverage
+          path: lib-foobar/out_coverage
           destination: coverage
 
       - store_artifacts:
-          path: notebooks
+          path: lib-foobar/notebooks
           destination: notebooks
 
   test-2.7:
