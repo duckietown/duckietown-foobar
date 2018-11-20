@@ -19,7 +19,7 @@ def get_version(filename):
 
 version = get_version(filename='src/duckietown_foobar/__init__.py')
 
-setup(name='duckietown-world',
+setup(name='duckietown_foobar',
 
       version=version,
       download_url='http://github.com/duckietown/duckietown-foobar/tarball/%s' % version,
