@@ -9,5 +9,5 @@ logger.setLevel(logging.DEBUG)
 
 logger.info('duckietown_foobar %s' % __version__)
 
-from .foo import *
+from .algo import *
 
