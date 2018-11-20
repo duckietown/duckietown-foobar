@@ -5,6 +5,9 @@
 [![PyPI status](https://img.shields.io/pypi/status/duckietown_foobar.svg)](https://pypi.python.org/pypi/duckietown_foobar/)
 
 
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/duckietown_foobar.svg)](https://pypi.python.org/pypi/duckietown_foobar/)
+
+
 # Foobar library
 
 A short description of the foobar library
