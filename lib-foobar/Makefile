@@ -20,7 +20,7 @@ comptest_package=duckietown_foobar_tests
 out=out-comptests
 coverage_dir=out-coverage
 coverage_include='*src/duckietown_foobar*'
-coveralls_repo_token=ASK_A_TA_FOR_THE_TOKEN
+coveralls_repo_token=ZIgSe75hZ7zhTRHFng9v6RcgJMjTqWkMY
 coverage_run=coverage run
 
 tests-clean:
