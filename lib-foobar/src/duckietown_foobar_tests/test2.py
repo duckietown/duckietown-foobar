@@ -7,7 +7,7 @@ from duckietown_foobar import FoobarAlgo
 def test_foo():
 
     c = FoobarAlgo(param1=1)
-
+    c.doit(10)
 
 
 if __name__ == '__main__':
